@@ -5,11 +5,25 @@ package dynamicProgramming;
 
 public class StrangePrinter {
 
+    /**
+     * StrangePrinter is a classic Dynamic Programming problem.
+     * In the below solution we try to find the minimum cost to print a given substring and a defaultChar.
+     * Basic idea is every character needs to be printed at some point of the printing process.
+     * Now it could be printed as part of a bigger parent substring or as part of the current call.
+     * We try to skip the first few characters which are already the same as the defaultChar.
+     * Then from the first non-matching character we need to change the defaultChar. Now we try out
+     * different substrings which atleast start and end with the first non-matching character and see
+     * which option takes the least cost.
+     */
     private int strangePrinter(String s, int start, int end, char defaultChar) {
+        // increment start till it is not equal to defaultChar
         while(start <= end && s.charAt(start) == defaultChar) start++;
 
+        // If the whole string was the same as defaultChar Nothing to do.
         if (start > end) return 0;
 
+        // If the first char is just the one lone character
+        // like abbbdece, i.e it does not occur later in the string.
         int minCost = 1 + strangePrinter(s, start+1, end, defaultChar);
 
         for(int index = start+1 ; index <= end ; index++) {
